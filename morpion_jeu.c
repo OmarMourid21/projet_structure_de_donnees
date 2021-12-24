@@ -8,7 +8,6 @@
 uint64_t trad_tab_dec(char tab[9]);
 char* trad_dec_tab(uint64_t at);
 void affiche_tableau(uint64_t dec);
-bool existe_esp(uint64_t dec);
 bool terminer_vertical(uint64_t dec);
 bool terminer_horizental(uint64_t dec);
 bool terminer_diag(uint64_t dec);
@@ -18,10 +17,10 @@ int jeu_morp(void);
 int main()
 {
 	int res = jeu_morp();
-	if(res == 1) printf("le joueur x ");
-	else if(res == -1) printf("le joueur o ");
+	if(res == 1) printf("le joueur x a gagne");
+	else if(res == -1) printf("le joueur o a gagne");
 	else printf("match null");
-	return 0;
+	return EXIT_SUCCESS;
 }
 
 
@@ -29,9 +28,9 @@ int main()
 
 int jeu_morp(void)
 {
-	char tab[9] = {' ',' ',' ',' ',' ',' ',' ',' ',' '};
-	uint8_t place;
-	uint8_t cp=0;
+	char tab[9] = {' .',' ',' ',' ',' ',' ',' ',' ',' '};
+	uint32_t place;
+	uint32_t cp=0;
 
     affiche_tableau(trad_tab_dec(tab));
 	while(cp<9)
@@ -39,8 +38,14 @@ int jeu_morp(void)
 		printf("\nchoose from 1 to 9\n");
 		scanf("%u",&place);
 
-		if( cp % 2 == 0 ) tab[place-1] = 'x';
-		else tab[place-1] = '0';
+		if( cp % 2 == 0 )
+		{
+			tab[place-1] = 'x';
+		}
+		else
+		{
+			tab[place-1] = '0';
+		}
 
 		affiche_tableau(trad_tab_dec(tab));
 		if(terminer_vertical(trad_tab_dec(tab)))
@@ -58,7 +63,7 @@ int jeu_morp(void)
 			if(cp % 2 == 0) return 1;
 			if(cp % 2 != 0) return -1;
 		}
-		cp++;
+		cp += 1 ;
 	}
 	return 0;
 }
